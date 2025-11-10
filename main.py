@@ -34,6 +34,10 @@ def setup_init_mysql():
             )
             """
             cur.execute(create_table_if_not_exists_query)
+    except pymysql.MySQLError as e:
+        print(f"MySQL 오류가 발생했습니다: {e}")
+        if conn:
+            conn.rollback()
     finally:
         if conn and conn.open:
             conn.close()
@@ -69,6 +73,10 @@ def add_grant_user():
             
             conn.commit()
             print(f"성공: 사용자 '{DB_USER}'에게 '{DB_NAME}' 데이터베이스에 대한 모든 권한이 부여되었습니다. (접속 허용 호스트: {TARGET_HOST})")
+    except pymysql.MySQLError as e:
+        print(f"MySQL 오류가 발생했습니다: {e}")
+        if conn:
+            conn.rollback()
     finally:
         if conn and conn.open:
             conn.close()
@@ -78,3 +86,7 @@ try:
     setup_init_mysql()
 except pymysql.err.OperationalError:
     add_grant_user()
+
+# 여기까지 초기 DB 세팅
+# 아래는 파이썬 print 및 db 컬럼 추가 및 조회 단계
+
