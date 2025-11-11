@@ -34,7 +34,10 @@ def vote_on_item():
             new_typename = input('새로운 음식 종류를 입력해주세요: ')
             if new_typename:
                 success, message = dbmanager.process_new_type(new_typename)
-                print(message)
+                if success:
+                    print(message)
+                else:
+                    print(f"오류가 발생했습니다: {message}")
             else:
                 print('입력이 취소되었습니다.')
         else:
