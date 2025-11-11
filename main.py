@@ -90,3 +90,33 @@ except pymysql.err.OperationalError:
 # 여기까지 초기 DB 세팅
 # 아래는 파이썬 print 및 db 컬럼 추가 및 조회 단계
 
+def display():
+    while True:
+        print('\n★좋아하는 음식 종류 설문조사★')
+        print('1.설문 참여하기')
+        print('2.설문 현황보기')
+        main_choice = input('선택:')
+
+        if main_choice == '1':
+            vote_on_item()
+        elif main_choice == '2':
+            display_results()
+        else:
+            print('1 또는 2만 선택할 수 있습니다.')
+
+def vote_on_item():
+    current_items = [(1, '한식'),(2, '양식'),(3, '중식'),(4, '일식')] # db 컬럼 조회 필요
+    for num, typename in current_items:
+        print(f'{num}. {typename}')
+    print('0. 기타(직접입력)')
+    choice = input('선택: ')
+
+def display_results():
+    results = [(1, '한식', 1),(2, '양식', 0),(3, '중식', 0),(4, '일식', 4)] # db 컬럼 조회 필요
+
+    for num, typename, vote in results:
+        print(f'{num}. {typename} ===> {vote}표')
+    print('-' * 30)
+    choice = input('초기로 돌아가려면 아무 문자 입력: ')
+
+display()
